@@ -1,0 +1,107 @@
+{
+  "project_info": {
+    "project_number": "705253373413",
+    "firebase_url": "https://dubki-app-default-rtdb.firebaseio.com",
+    "project_id": "dubki-app",
+    "storage_bucket": "dubki-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:705253373413:android:ae5f8b5429d91c33042b0c",
+        "android_client_info": {
+          "package_name": "com.app.dubkiapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "705253373413-43sv1gc6hl1ctp79oqd80l1f0hq1g5od.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.app.dubkiapp",
+            "certificate_hash": "240ac62ca0d67ebc430049db32ee96d71b6c4a9f"
+          }
+        },
+        {
+          "client_id": "705253373413-rqs7ivopcodv5v8tr8tsa8rp3k69cpvl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.app.dubkiapp",
+            "certificate_hash": "73cff0ea615dfab177618490c358f9db84618795"
+          }
+        },
+        {
+          "client_id": "705253373413-ilm9m3qnepko4ang00rbcc37tggghjiu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA623znQsmp9C1Lotb0EZt3_S_U7d36Sx8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "705253373413-ilm9m3qnepko4ang00rbcc37tggghjiu.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "705253373413-ri89vqjdjr576v2d6mkfhbo16kc3uvjc.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "hse.DubkiApp"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:705253373413:android:5c07b4515ebc8c0a042b0c",
+        "android_client_info": {
+          "package_name": "com.app.dubovozkiapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "705253373413-sd87uukact6o447f906hur3odb23d0th.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.app.dubovozkiapp",
+            "certificate_hash": "d205f11580c92819aff5c58a62a0b17dde2bee67"
+          }
+        },
+        {
+          "client_id": "705253373413-ilm9m3qnepko4ang00rbcc37tggghjiu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA623znQsmp9C1Lotb0EZt3_S_U7d36Sx8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "705253373413-ilm9m3qnepko4ang00rbcc37tggghjiu.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "705253373413-ri89vqjdjr576v2d6mkfhbo16kc3uvjc.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "hse.DubkiApp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

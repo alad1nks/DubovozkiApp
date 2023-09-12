@@ -116,8 +116,70 @@ sealed interface BusUi {
     ) : BusUi {
         @Composable
         override fun Content() {
-        }
+            Surface(
+                onClick = {
 
+                }
+            ) {
+                Column {
+                    ListItem(
+                        modifier = Modifier
+                            .padding(8.dp),
+                        headlineContent = {
+                        },
+                        leadingContent = {
+                            when (this@NotToday.station) {
+                                Station.ODINTSOVO -> {
+                                    Text(
+                                        text = this@NotToday.time,
+                                        fontSize = 24.sp
+                                    )
+                                }
+                                Station.SLAVYANKA -> {
+                                    Text(
+                                        text = this@NotToday.time,
+                                        color = Color.Green,
+                                        fontSize = 24.sp
+                                    )
+                                }
+                                Station.MOLODYOZHNAYA -> {
+                                    Text(
+                                        text = this@NotToday.time,
+                                        color = MaterialTheme.colorScheme.primary,
+                                        fontSize = 24.sp
+                                    )
+                                }
+                            }
+                        },
+                        trailingContent = {
+                            when (this@NotToday.station) {
+                                Station.ODINTSOVO -> {
+                                    Text(
+                                        text = "Одинцово",
+                                        fontSize = 16.sp
+                                    )
+                                }
+                                Station.SLAVYANKA -> {
+                                    Text(
+                                        text = "Славянский б-р",
+                                        color = Color.Green,
+                                        fontSize = 16.sp
+                                    )
+                                }
+                                Station.MOLODYOZHNAYA -> {
+                                    Text(
+                                        text = "Молодёжная",
+                                        color = MaterialTheme.colorScheme.primary,
+                                        fontSize = 16.sp
+                                    )
+                                }
+                            }
+                        }
+                    )
+                    Divider()
+                }
+            }
+        }
     }
 
 }

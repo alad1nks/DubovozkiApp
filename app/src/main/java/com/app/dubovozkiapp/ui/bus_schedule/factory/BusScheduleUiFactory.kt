@@ -3,7 +3,6 @@ package com.app.dubovozkiapp.ui.bus_schedule.factory
 import com.app.dubovozkiapp.domain.bus_schedule.model.BusScheduleDomain
 import com.app.dubovozkiapp.domain.bus_schedule.model.OneDirectionScheduleDomain
 import com.app.dubovozkiapp.ui.bus_schedule.model.BusScheduleUi
-import com.app.dubovozkiapp.ui.bus_schedule.model.BusUi
 import com.app.dubovozkiapp.ui.bus_schedule.model.DepartedBusUi
 import com.app.dubovozkiapp.ui.bus_schedule.model.OneDirectionScheduleUi
 
@@ -34,19 +33,7 @@ object BusUiFactory {
                 )
             },
             busList = this.busList.map {
-                val minutesLeft = it.timeLeft % 60
-                val hoursLeft = it.timeLeft / 60
-                BusUi(
-                    id = it.id,
-                    time = it.dayTimeString,
-                    timeLeft = if (hoursLeft > 0) {
-                        "через $hoursLeft ч $minutesLeft мин"
-                    } else {
-                        "через $minutesLeft мин"
-                    },
-                    timeLeftSoon = it.timeLeft <= 15,
-                    station = it.station
-                )
+                it.toUi()
             }
         )
     }

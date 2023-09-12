@@ -1,5 +1,6 @@
 package com.app.dubovozkiapp.domain.bus_schedule.usecases
 
+import android.util.Log
 import com.app.dubovozkiapp.consts.DayOfTheWeek
 import com.app.dubovozkiapp.consts.ScheduleDay
 import com.app.dubovozkiapp.consts.Station
@@ -20,21 +21,29 @@ class GetBusScheduleUseCaseImpl @Inject constructor(
         day: String,
         station: String
     ): BusScheduleDomain {
+
         val busList = when(station) {
-            Station.ALL -> repository.getBusListAllStation(day.query()).toDomain()
-            else -> repository.getBusList(day.query(), station).toDomain()
+            Station.ALL -> repository.getBusListAllStation(day.query())
+            else -> repository.getBusList(day.query(), station)
         }
 
-        val (firstMoscowBus, firstDubkiBus) = busList.getFirstBuses()
+        if (day != ScheduleDay.TODAY) {
+            return BusScheduleDomain(
+                moscowSchedule = OneDirectionScheduleDomain(busList = busList.first.toDomain()),
+                dubkiSchedule = OneDirectionScheduleDomain(busList = busList.second.toDomain())
+            )
+        }
+
+        val (firstMoscowBus, firstDubkiBus) = busList.toDomain().getFirstBuses()
 
         return BusScheduleDomain(
-            moscowSchedule = oneDirectionScheduleFactory(firstMoscowBus, busList.first),
-            dubkiSchedule = oneDirectionScheduleFactory(firstDubkiBus, busList.second)
+            moscowSchedule = oneDirectionScheduleFactory(firstMoscowBus, busList.toDomain().first),
+            dubkiSchedule = oneDirectionScheduleFactory(firstDubkiBus, busList.toDomain().second)
         )
     }
 
 
-    private fun Pair<List<BusDomain>, List<BusDomain>>.getFirstBuses(): Array<Int> {
+    private fun Pair<List<BusDomain.Today>, List<BusDomain.Today>>.getFirstBuses(): Array<Int> {
         var firstMoscowBus = 0
         run breaking@ {
             this.first.forEachIndexed { index, busDomain ->
@@ -79,14 +88,14 @@ class GetBusScheduleUseCaseImpl @Inject constructor(
 
     private fun oneDirectionScheduleFactory(
         firstBus: Int,
-        busList: List<BusDomain>
+        busList: List<BusDomain.Today>
     ): OneDirectionScheduleDomain = OneDirectionScheduleDomain(
         firstBus = firstBus,
         departedBusList = busList.subList(0, firstBus).toDepartedBusList(),
         busList = busList.subList(firstBus, busList.size)
     )
 
-    private fun List<BusDomain>.toDepartedBusList(): List<DepartedBusDomain> = this.map {
+    private fun List<BusDomain.Today>.toDepartedBusList(): List<DepartedBusDomain> = this.map {
         DepartedBusDomain(
             id = it.id,
             timePassed = -it.timeLeft,

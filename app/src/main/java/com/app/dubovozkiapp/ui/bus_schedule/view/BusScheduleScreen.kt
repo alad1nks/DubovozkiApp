@@ -230,7 +230,7 @@ private fun BusScheduleData(
                     }
                     screenState.schedule.dubki.busList.forEach {
                         item {
-                            BusItem(item = it)
+                            it.Content()
                         }
                     }
                 }
@@ -275,90 +275,6 @@ private fun DepartedBusItem(
                         color = MaterialTheme.colorScheme.inverseOnSurface,
                         fontSize = 16.sp
                     )
-                }
-            )
-            Divider()
-        }
-    }
-}
-
-@Composable
-private fun BusItem(
-    item: BusUi
-) {
-    Surface(
-        onClick = {
-
-        }
-    ) {
-        Column {
-            ListItem(
-                modifier = Modifier
-                    .padding(8.dp),
-                headlineContent = {
-                    if (item.timeLeftSoon) {
-                        Text(
-                            text = item.timeLeft,
-                            modifier = Modifier
-                                .background(color = Color.Red, shape = shapes.small)
-                                .padding(vertical = 8.dp, horizontal = 12.dp),
-                            color = Color.White,
-                            fontSize = 12.sp
-                        )
-                    } else {
-                        Text(
-                            text = item.timeLeft,
-                            fontSize = 12.sp
-                        )
-                    }
-                },
-                leadingContent = {
-                    when (item.station) {
-                        ODINTSOVO -> {
-                            Text(
-                                text = item.time,
-                                fontSize = 24.sp
-                            )
-                        }
-                        SLAVYANKA -> {
-                            Text(
-                                text = item.time,
-                                color = Color.Green,
-                                fontSize = 24.sp
-                            )
-                        }
-                        MOLODYOZHNAYA -> {
-                            Text(
-                                text = item.time,
-                                color = MaterialTheme.colorScheme.primary,
-                                fontSize = 24.sp
-                            )
-                        }
-                    }
-                },
-                trailingContent = {
-                    when (item.station) {
-                        ODINTSOVO -> {
-                            Text(
-                                text = "Одинцово",
-                                fontSize = 16.sp
-                            )
-                        }
-                        SLAVYANKA -> {
-                            Text(
-                                text = "Славянский б-р",
-                                color = Color.Green,
-                                fontSize = 16.sp
-                            )
-                        }
-                        MOLODYOZHNAYA -> {
-                            Text(
-                                text = "Молодёжная",
-                                color = MaterialTheme.colorScheme.primary,
-                                fontSize = 16.sp
-                            )
-                        }
-                    }
                 }
             )
             Divider()

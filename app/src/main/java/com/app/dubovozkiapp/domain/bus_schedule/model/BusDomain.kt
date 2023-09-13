@@ -1,6 +1,8 @@
 package com.app.dubovozkiapp.domain.bus_schedule.model
 
+import com.app.dubovozkiapp.consts.Station
 import com.app.dubovozkiapp.ui.bus_schedule.model.BusUi
+import com.app.dubovozkiapp.ui.bus_schedule.model.StationUi
 
 
 sealed interface BusDomain {
@@ -23,7 +25,7 @@ sealed interface BusDomain {
                     "через $minutesLeft мин"
                 },
                 timeLeftSoon = timeLeft <= 15,
-                station = station
+                station = station.toStationUi()
             )
         }
     }
@@ -37,8 +39,16 @@ sealed interface BusDomain {
             return BusUi.NotToday(
                 id = id,
                 time = dayTimeString,
-                station = station
+                station = station.toStationUi()
             )
+        }
+    }
+
+    fun String.toStationUi(): StationUi {
+        return when(this) {
+            Station.ODINTSOVO -> StationUi.Odintsovo
+            Station.SLAVYANKA -> StationUi.Slavyanka
+            else -> StationUi.Molodyozhnaya
         }
     }
 }

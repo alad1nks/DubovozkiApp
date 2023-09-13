@@ -40,8 +40,8 @@ class BusScheduleRepositoryImpl @Inject constructor(
 
     override suspend fun refreshBusSchedule(): RevisionResponse {
         return when(getRevision()) {
-            userManager.getRevision() -> RevisionResponse.EQUALS
-            null -> RevisionResponse.NETWORK_ERROR
+            userManager.getRevision() -> RevisionResponse.Equals
+            null -> RevisionResponse.NetworkError
             else -> updateSchedule()
         }
     }
@@ -56,12 +56,12 @@ class BusScheduleRepositoryImpl @Inject constructor(
 
     private suspend fun updateSchedule(): RevisionResponse {
         return when(val schedule = getSchedule()) {
-            null -> RevisionResponse.NETWORK_ERROR
+            null -> RevisionResponse.NetworkError
             else -> {
                 dao.clearSchedule()
                 dao.updateSchedule(schedule.toEntity())
                 userManager.updateRevision()
-                RevisionResponse.NOT_EQUALS
+                RevisionResponse.NotEquals
             }
         }
     }

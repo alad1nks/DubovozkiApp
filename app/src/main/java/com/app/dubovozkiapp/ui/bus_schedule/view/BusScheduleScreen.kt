@@ -121,7 +121,9 @@ fun BusScheduleScreen(
                     )
                 }
             }
-            screenState.Content(pagerState = pagerState)
+            screenState.Content(
+                pagerState = pagerState
+            )
         }
     }
 }

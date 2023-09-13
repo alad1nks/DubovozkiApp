@@ -1,7 +1,6 @@
 package com.app.dubovozkiapp.consts
 
 import com.app.dubovozkiapp.ui.views.MenuItem
-import com.app.dubovozkiapp.ui.views.TabItem
 
 object Constants {
     val daysSpinnerItems = listOf(
@@ -21,6 +20,4 @@ object Constants {
         MenuItem("Молодежная", Station.MOLODYOZHNAYA),
         MenuItem("Славянский б-р", Station.SLAVYANKA)
     )
-
-
 }

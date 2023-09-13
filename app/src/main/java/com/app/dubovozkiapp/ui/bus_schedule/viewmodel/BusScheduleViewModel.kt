@@ -2,11 +2,9 @@ package com.app.dubovozkiapp.ui.bus_schedule.viewmodel
 
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.app.dubovozkiapp.consts.CoroutineTimeout.REFRESH_DELAY
-import com.app.dubovozkiapp.consts.RevisionResponse
 import com.app.dubovozkiapp.domain.bus_schedule.usecases.GetBusScheduleUseCase
 import com.app.dubovozkiapp.domain.bus_schedule.usecases.RefreshBusScheduleUseCase
 import com.app.dubovozkiapp.ktx.runCatchingNonCancellation
@@ -69,23 +67,23 @@ class BusScheduleViewModel @Inject constructor(
             .launchIn(viewModelScope)
     }
 
-    private suspend fun getBusScheduleScreenState(query: BusScheduleQueryState): BusScheduleScreenState {
+    private suspend fun getBusScheduleScreenState(
+        query: BusScheduleQueryState
+    ): BusScheduleScreenState {
         val result = getBusSchedule(query)
-        _screenState.emit(result?.let { BusScheduleScreenState.Loading(it) } ?: BusScheduleScreenState.DatabaseError)
+        _screenState.emit(result?.let { BusScheduleScreenState.Loading(it) }
+            ?: BusScheduleScreenState.DatabaseError)
         val revisionResponse = runCatchingNonCancellation {
             refreshBusScheduleUseCase.refreshBusSchedule()
         }.getOrNull()
-        return when(revisionResponse) {
-            RevisionResponse.EQUALS -> result?.let { BusScheduleScreenState.Data(it) } ?: BusScheduleScreenState.DatabaseError
-            RevisionResponse.NOT_EQUALS -> getBusSchedule(query)?.let { BusScheduleScreenState.Data(it) } ?: BusScheduleScreenState.DatabaseError
-            RevisionResponse.NETWORK_ERROR -> getBusSchedule(query)?.let { BusScheduleScreenState.NetworkError(it) } ?: BusScheduleScreenState.DatabaseError
-            else -> result?.let { BusScheduleScreenState.Data(it) } ?: BusScheduleScreenState.DatabaseError
-        }
+        return revisionResponse?.getScreenState(getBusSchedule(query))
+            ?: BusScheduleScreenState.DatabaseError
     }
 
     private suspend fun refreshBusScheduleScreenState() {
         val result = getBusSchedule(_queryState.value)
-        _screenState.emit(result?.let { BusScheduleScreenState.Data(it) } ?: BusScheduleScreenState.DatabaseError)
+        _screenState.emit(result?.let { BusScheduleScreenState.Data(it) }
+            ?: BusScheduleScreenState.DatabaseError)
     }
 
     private suspend fun getBusSchedule(

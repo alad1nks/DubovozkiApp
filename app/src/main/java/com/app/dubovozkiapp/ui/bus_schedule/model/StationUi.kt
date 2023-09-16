@@ -7,9 +7,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.sp
 
 sealed interface StationUi {
-
     fun timeContent(time: String): @Composable () -> Unit
-
     fun nameContent(): @Composable () -> Unit
 
     object Odintsovo : StationUi {

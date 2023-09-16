@@ -45,7 +45,7 @@ class BusScheduleViewModel @Inject constructor(
         override fun run() {
             handler.postDelayed(this, REFRESH_DELAY)
             viewModelScope.launch(Dispatchers.IO) {
-                refreshBusScheduleScreenState()
+                refreshBusScheduleScreenState(_queryState.value)
             }
         }
     }
@@ -80,9 +80,10 @@ class BusScheduleViewModel @Inject constructor(
             ?: BusScheduleScreenState.DatabaseError
     }
 
-    private suspend fun refreshBusScheduleScreenState() {
-        val result = getBusSchedule(_queryState.value)
-        _screenState.emit(result?.let { BusScheduleScreenState.Data(it) }
+    private suspend fun refreshBusScheduleScreenState(
+        query: BusScheduleQueryState
+    ) {
+        _screenState.emit(getBusSchedule(query)?.let { BusScheduleScreenState.Data(it) }
             ?: BusScheduleScreenState.DatabaseError)
     }
 

@@ -1,5 +1,6 @@
 package com.app.dubovozkiapp.ui.bus_schedule.factory
 
+import com.app.dubovozkiapp.consts.Station
 import com.app.dubovozkiapp.domain.bus_schedule.model.BusScheduleDomain
 import com.app.dubovozkiapp.domain.bus_schedule.model.OneDirectionScheduleDomain
 import com.app.dubovozkiapp.ui.bus_schedule.model.BusScheduleUi
@@ -29,12 +30,20 @@ object BusUiFactory {
                     } else {
                         "$minutesPassed мин назад"
                     },
-                    station = it.station
+                    station = it.station.toStation()
                 )
             },
             busList = this.busList.map {
                 it.toUi()
             }
         )
+    }
+
+    private fun String.toStation(): String {
+        return when(this) {
+            Station.ODINTSOVO -> "Одинцово"
+            Station.SLAVYANKA -> "Славянский б-р"
+            else -> "Молодёжная"
+        }
     }
 }

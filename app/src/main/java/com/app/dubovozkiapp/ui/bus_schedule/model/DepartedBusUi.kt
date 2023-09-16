@@ -44,7 +44,7 @@ data class DepartedBusUi(
                     },
                     trailingContent = {
                         Text(
-                            text = "Молодёжная",
+                            text = station,
                             color = MaterialTheme.colorScheme.inverseOnSurface,
                             fontSize = 16.sp
                         )

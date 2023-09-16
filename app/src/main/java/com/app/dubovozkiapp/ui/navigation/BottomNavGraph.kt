@@ -7,9 +7,12 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
@@ -22,7 +25,9 @@ import com.app.dubovozkiapp.ui.services.view.ServicesScreen
 import com.app.dubovozkiapp.ui.settings.view.SettingsScreen
 import com.app.dubovozkiapp.ui.settings.viewmodel.SettingsViewModel
 
-@SuppressLint("UnusedMaterialScaffoldPaddingParameter", "UnusedMaterial3ScaffoldPaddingParameter")
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter", "UnusedMaterial3ScaffoldPaddingParameter",
+    "CoroutineCreationDuringComposition"
+)
 @Composable
 fun BottomNavGraph(
     modifier: Modifier = Modifier,
@@ -38,7 +43,13 @@ fun BottomNavGraph(
     )
     val navBackStackEntry by bottomNavController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
+
+
+    val snackbarHostState = remember { SnackbarHostState() }
     Scaffold(
+        snackbarHost = {
+            SnackbarHost(hostState = snackbarHostState)
+        },
         bottomBar = {
             NavigationBar{
                 items.forEach { item ->
@@ -54,8 +65,8 @@ fun BottomNavGraph(
                         selected = currentRoute == item.screenRoute,
                         onClick = {
                             bottomNavController.navigate(item.screenRoute) {
-                                bottomNavController.graph.startDestinationRoute?.let { screen_route ->
-                                    popUpTo(screen_route) {
+                                bottomNavController.graph.startDestinationRoute?.let { screenRoute ->
+                                    popUpTo(screenRoute) {
                                         saveState = true
                                     }
                                 }
@@ -75,7 +86,9 @@ fun BottomNavGraph(
                     modifier = modifier
                 ) {
                     composable(BottomNavigationItem.BusScheduleScreen.screenRoute) {
-                        BusScheduleScreen()
+                        BusScheduleScreen(
+                            snackbarHostState = snackbarHostState
+                        )
                     }
                     composable(BottomNavigationItem.ServicesScreen.screenRoute) {
                         ServicesScreen()

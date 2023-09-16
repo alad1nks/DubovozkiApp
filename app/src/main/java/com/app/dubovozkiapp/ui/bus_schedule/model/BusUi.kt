@@ -91,5 +91,4 @@ sealed interface BusUi {
             }
         }
     }
-
 }

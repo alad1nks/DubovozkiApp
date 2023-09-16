@@ -10,6 +10,7 @@ import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MaterialTheme.shapes
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
@@ -41,7 +42,8 @@ import me.onebone.toolbar.rememberCollapsingToolbarScaffoldState
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
 fun BusScheduleScreen(
-    viewModel: BusScheduleViewModel = hiltViewModel()
+    viewModel: BusScheduleViewModel = hiltViewModel(),
+    snackbarHostState: SnackbarHostState
 ) {
     val screenState by viewModel.screenState.collectAsState()
     val queryState by viewModel.queryState.collectAsState()
@@ -122,7 +124,8 @@ fun BusScheduleScreen(
                 }
             }
             screenState.Content(
-                pagerState = pagerState
+                pagerState = pagerState,
+                snackbarHostState = snackbarHostState
             )
         }
     }

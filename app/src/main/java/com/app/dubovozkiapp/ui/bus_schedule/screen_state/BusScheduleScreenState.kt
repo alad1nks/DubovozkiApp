@@ -8,7 +8,10 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.SnackbarResult
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.app.dubovozkiapp.ui.bus_schedule.model.BusScheduleUi
@@ -16,12 +19,12 @@ import com.app.dubovozkiapp.ui.bus_schedule.model.BusScheduleUi
 sealed interface BusScheduleScreenState {
     @OptIn(ExperimentalFoundationApi::class)
     @Composable
-    fun Content(pagerState: PagerState)
+    fun Content(pagerState: PagerState, snackbarHostState: SnackbarHostState)
 
     object Init : BusScheduleScreenState {
         @ExperimentalFoundationApi
         @Composable
-        override fun Content(pagerState: PagerState) {
+        override fun Content(pagerState: PagerState, snackbarHostState: SnackbarHostState) {
             Box(
                 modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center
@@ -44,7 +47,7 @@ sealed interface BusScheduleScreenState {
     ) : BusScheduleScreenState {
         @ExperimentalFoundationApi
         @Composable
-        override fun Content(pagerState: PagerState) {
+        override fun Content(pagerState: PagerState, snackbarHostState: SnackbarHostState) {
             val moscowBusListState = rememberLazyListState(
                 initialFirstVisibleItemIndex = schedule.moscow.topItemIndex
             )
@@ -103,7 +106,7 @@ sealed interface BusScheduleScreenState {
     ) : BusScheduleScreenState {
         @ExperimentalFoundationApi
         @Composable
-        override fun Content(pagerState: PagerState) {
+        override fun Content(pagerState: PagerState, snackbarHostState: SnackbarHostState) {
             val moscowBusListState = rememberLazyListState(
                 initialFirstVisibleItemIndex = schedule.moscow.topItemIndex
             )
@@ -162,13 +165,29 @@ sealed interface BusScheduleScreenState {
     ) : BusScheduleScreenState {
         @ExperimentalFoundationApi
         @Composable
-        override fun Content(pagerState: PagerState) {
+        override fun Content(pagerState: PagerState, snackbarHostState: SnackbarHostState) {
             val moscowBusListState = rememberLazyListState(
                 initialFirstVisibleItemIndex = schedule.moscow.topItemIndex
             )
             val dubkiBusListState = rememberLazyListState(
                 initialFirstVisibleItemIndex = schedule.dubki.topItemIndex
             )
+            LaunchedEffect(snackbarHostState) {
+                val snackbarResult = snackbarHostState.showSnackbar(
+                    message = "Проблемы с соединением",
+                    actionLabel = "Повторить",
+                    withDismissAction = true
+                )
+                when(snackbarResult) {
+                    SnackbarResult.Dismissed -> {
+
+                    }
+                    SnackbarResult.ActionPerformed -> {
+
+                    }
+                }
+            }
+
             HorizontalPager(
                 state = pagerState,
                 pageCount = 2
@@ -219,7 +238,7 @@ sealed interface BusScheduleScreenState {
     object DatabaseError : BusScheduleScreenState {
         @ExperimentalFoundationApi
         @Composable
-        override fun Content(pagerState: PagerState) {
+        override fun Content(pagerState: PagerState, snackbarHostState: SnackbarHostState) {
             Box(
                 modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center

@@ -20,7 +20,6 @@ class UserManager @Inject constructor(
     fun getRevision() = storage.getInt(REVISION)
 
 
-
     fun userLogIn() { storage.setBoolean(USER_LOGGED_IN, true) }
     fun userLogOut() { storage.setBoolean(USER_LOGGED_IN, false) }
     fun setDarkTheme(darkTheme: Boolean) { storage.setBoolean(DARK_THEME, darkTheme) }

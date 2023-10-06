@@ -95,4 +95,9 @@ dependencies {
     implementation(platform("com.google.firebase:firebase-bom:32.2.2"))
     implementation("com.google.firebase:firebase-database-ktx")
     implementation("com.google.firebase:firebase-storage-ktx")
+
+//    // animation
+//    implementation("androidx.compose.animation:animation:1.5.1")
+//    implementation("androidx.compose.animation:animation-graphics-android:1.5.1")
+
 }

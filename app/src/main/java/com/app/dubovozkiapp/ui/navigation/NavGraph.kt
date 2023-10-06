@@ -18,7 +18,6 @@ fun NavGraph(
     startDestination: String = NavigationItem.BottomNavigationScreen.screenRoute,
     settingsViewModel: SettingsViewModel
 ){
-
     NavHost(
         navController = navController,
         startDestination = startDestination,

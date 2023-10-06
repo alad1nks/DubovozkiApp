@@ -1,7 +1,6 @@
 package com.app.dubovozkiapp.ui.navigation
 
 import android.annotation.SuppressLint
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
@@ -21,6 +20,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.app.dubovozkiapp.ui.bus_schedule.view.BusScheduleScreen
+import com.app.dubovozkiapp.ui.castellan.view.CastellanScreen
 import com.app.dubovozkiapp.ui.services.view.ServicesScreen
 import com.app.dubovozkiapp.ui.settings.view.SettingsScreen
 import com.app.dubovozkiapp.ui.settings.viewmodel.SettingsViewModel
@@ -30,7 +30,6 @@ import com.app.dubovozkiapp.ui.settings.viewmodel.SettingsViewModel
 )
 @Composable
 fun BottomNavGraph(
-    modifier: Modifier = Modifier,
     bottomNavController: NavHostController = rememberNavController(),
     startDestination: String = BottomNavigationItem.BusScheduleScreen.screenRoute,
     navController: NavController,
@@ -43,8 +42,6 @@ fun BottomNavGraph(
     )
     val navBackStackEntry by bottomNavController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
-
-
     val snackbarHostState = remember { SnackbarHostState() }
     Scaffold(
         snackbarHost = {
@@ -79,25 +76,29 @@ fun BottomNavGraph(
             }
         },
         content = { innerPadding ->
-            Box(modifier = Modifier.padding(innerPadding)) {
-                NavHost(
-                    navController = bottomNavController,
-                    startDestination = startDestination,
-                    modifier = modifier
-                ) {
-                    composable(BottomNavigationItem.BusScheduleScreen.screenRoute) {
-                        BusScheduleScreen(
-                            snackbarHostState = snackbarHostState
-                        )
-                    }
-                    composable(BottomNavigationItem.ServicesScreen.screenRoute) {
-                        ServicesScreen()
-                    }
-                    composable(BottomNavigationItem.SettingsScreen.screenRoute) {
-                        SettingsScreen(
-                            viewModel = settingsViewModel
-                        )
-                    }
+            NavHost(
+                navController = bottomNavController,
+                startDestination = startDestination,
+                modifier = Modifier.padding(innerPadding)
+            ) {
+                composable(BottomNavigationItem.BusScheduleScreen.screenRoute) {
+                    BusScheduleScreen(
+                        snackbarHostState = snackbarHostState
+                    )
+                }
+                composable(BottomNavigationItem.ServicesScreen.screenRoute) {
+                    ServicesScreen(
+                        navController = bottomNavController
+                    )
+                }
+                composable(BottomNavigationItem.SettingsScreen.screenRoute) {
+                    SettingsScreen(
+                        viewModel = settingsViewModel
+                    )
+                }
+
+                composable(NavigationItem.CastellanNavigationScreen.screenRoute) {
+                    CastellanScreen()
                 }
             }
         }

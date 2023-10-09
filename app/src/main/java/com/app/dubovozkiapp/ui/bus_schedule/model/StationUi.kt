@@ -3,7 +3,6 @@ package com.app.dubovozkiapp.ui.bus_schedule.model
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.sp
 
 sealed interface StationUi {
@@ -32,7 +31,7 @@ sealed interface StationUi {
         override fun timeContent(time: String): @Composable () -> Unit = {
             Text(
                 text = time,
-                color = Color.Green,
+                color = MaterialTheme.colorScheme.tertiary,
                 fontSize = 24.sp
             )
         }
@@ -40,7 +39,7 @@ sealed interface StationUi {
         override fun nameContent(): @Composable () -> Unit = {
             Text(
                 text = "Славянский б-р",
-                color = Color.Green,
+                color = MaterialTheme.colorScheme.tertiary,
                 fontSize = 16.sp
             )
         }

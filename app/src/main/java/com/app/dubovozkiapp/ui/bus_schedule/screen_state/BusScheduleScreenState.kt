@@ -4,6 +4,7 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerState
@@ -48,56 +49,7 @@ sealed interface BusScheduleScreenState {
         @ExperimentalFoundationApi
         @Composable
         override fun Content(pagerState: PagerState, snackbarHostState: SnackbarHostState) {
-            val moscowBusListState = rememberLazyListState(
-                initialFirstVisibleItemIndex = schedule.moscow.topItemIndex
-            )
-            val dubkiBusListState = rememberLazyListState(
-                initialFirstVisibleItemIndex = schedule.dubki.topItemIndex
-            )
-            HorizontalPager(
-                state = pagerState,
-                pageCount = 2
-            ) { page ->
-                when(page) {
-                    0 -> {
-                        LazyColumn(
-                            modifier = Modifier
-                                .fillMaxSize(),
-                            state = moscowBusListState
-                        ) {
-                            schedule.moscow.departedBusList.forEach {
-                                item {
-                                    it.Content()
-                                }
-                            }
-                            schedule.moscow.busList.forEach {
-                                item {
-                                    it.Content()
-                                }
-                            }
-                        }
-                    }
-                    1 -> {
-                        LazyColumn(
-                            modifier = Modifier
-                                .fillMaxSize(),
-                            state = dubkiBusListState
-                        ) {
-                            schedule.dubki.departedBusList.forEach {
-                                item {
-                                    it.Content()
-                                }
-                            }
-                            schedule.dubki.busList.forEach {
-                                item {
-                                    it.Content()
-                                }
-                            }
-                        }
-                    }
-                }
-
-            }
+            Schedule(pagerState = pagerState, schedule = schedule)
         }
     }
 
@@ -107,56 +59,7 @@ sealed interface BusScheduleScreenState {
         @ExperimentalFoundationApi
         @Composable
         override fun Content(pagerState: PagerState, snackbarHostState: SnackbarHostState) {
-            val moscowBusListState = rememberLazyListState(
-                initialFirstVisibleItemIndex = schedule.moscow.topItemIndex
-            )
-            val dubkiBusListState = rememberLazyListState(
-                initialFirstVisibleItemIndex = schedule.dubki.topItemIndex
-            )
-            HorizontalPager(
-                state = pagerState,
-                pageCount = 2
-            ) { page ->
-                when(page) {
-                    0 -> {
-                        LazyColumn(
-                            modifier = Modifier
-                                .fillMaxSize(),
-                            state = moscowBusListState
-                        ) {
-                            schedule.moscow.departedBusList.forEach {
-                                item {
-                                    it.Content()
-                                }
-                            }
-                            schedule.moscow.busList.forEach {
-                                item {
-                                    it.Content()
-                                }
-                            }
-                        }
-                    }
-                    1 -> {
-                        LazyColumn(
-                            modifier = Modifier
-                                .fillMaxSize(),
-                            state = dubkiBusListState
-                        ) {
-                            schedule.dubki.departedBusList.forEach {
-                                item {
-                                    it.Content()
-                                }
-                            }
-                            schedule.dubki.busList.forEach {
-                                item {
-                                    it.Content()
-                                }
-                            }
-                        }
-                    }
-                }
-
-            }
+            Schedule(pagerState = pagerState, schedule = schedule)
         }
     }
 
@@ -166,12 +69,6 @@ sealed interface BusScheduleScreenState {
         @ExperimentalFoundationApi
         @Composable
         override fun Content(pagerState: PagerState, snackbarHostState: SnackbarHostState) {
-            val moscowBusListState = rememberLazyListState(
-                initialFirstVisibleItemIndex = schedule.moscow.topItemIndex
-            )
-            val dubkiBusListState = rememberLazyListState(
-                initialFirstVisibleItemIndex = schedule.dubki.topItemIndex
-            )
             LaunchedEffect(snackbarHostState) {
                 val snackbarResult = snackbarHostState.showSnackbar(
                     message = "Проблемы с соединением",
@@ -188,50 +85,7 @@ sealed interface BusScheduleScreenState {
                 }
             }
 
-            HorizontalPager(
-                state = pagerState,
-                pageCount = 2
-            ) { page ->
-                when(page) {
-                    0 -> {
-                        LazyColumn(
-                            modifier = Modifier
-                                .fillMaxSize(),
-                            state = moscowBusListState
-                        ) {
-                            schedule.moscow.departedBusList.forEach {
-                                item {
-                                    it.Content()
-                                }
-                            }
-                            schedule.moscow.busList.forEach {
-                                item {
-                                    it.Content()
-                                }
-                            }
-                        }
-                    }
-                    1 -> {
-                        LazyColumn(
-                            modifier = Modifier
-                                .fillMaxSize(),
-                            state = dubkiBusListState
-                        ) {
-                            schedule.dubki.departedBusList.forEach {
-                                item {
-                                    it.Content()
-                                }
-                            }
-                            schedule.dubki.busList.forEach {
-                                item {
-                                    it.Content()
-                                }
-                            }
-                        }
-                    }
-                }
-
-            }
+            Schedule(pagerState = pagerState, schedule = schedule)
         }
     }
 
@@ -252,6 +106,49 @@ sealed interface BusScheduleScreenState {
                 CircularProgressIndicator(
                     modifier = Modifier
                 )
+            }
+        }
+    }
+
+    @OptIn(ExperimentalFoundationApi::class)
+    @Composable
+    fun Schedule(
+        pagerState: PagerState,
+        schedule: BusScheduleUi
+    ) {
+        val moscowBusListState = rememberLazyListState(
+            initialFirstVisibleItemIndex = schedule.moscow.topItemIndex
+        )
+        val dubkiBusListState = rememberLazyListState(
+            initialFirstVisibleItemIndex = schedule.dubki.topItemIndex
+        )
+        HorizontalPager(
+            state = pagerState,
+            pageCount = 2
+        ) { page ->
+            when(page) {
+                0 -> {
+                    LazyColumn(
+                        modifier = Modifier
+                            .fillMaxSize(),
+                        state = moscowBusListState
+                    ) {
+                        items(schedule.moscow.busList) {bus ->
+                            bus.Content()
+                        }
+                    }
+                }
+                1 -> {
+                    LazyColumn(
+                        modifier = Modifier
+                            .fillMaxSize(),
+                        state = dubkiBusListState
+                    ) {
+                        items(schedule.dubki.busList) {bus ->
+                            bus.Content()
+                        }
+                    }
+                }
             }
         }
     }

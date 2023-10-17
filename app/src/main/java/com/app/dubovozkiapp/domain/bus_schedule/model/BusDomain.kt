@@ -30,6 +30,29 @@ sealed interface BusDomain {
         }
     }
 
+    data class TodayDeparted(
+        val id: Int,
+        val timePassed: Long,
+        val dayTimeString: String,
+        val station: String
+    ) : BusDomain {
+        override fun toUi(): BusUi {
+            val minutesPassed = this.timePassed % 60
+            val hoursPassed = this.timePassed / 60
+            return BusUi.TodayDeparted(
+                id = id,
+                time = dayTimeString,
+                timePassed = if (hoursPassed > 0) {
+                    "$hoursPassed ч $minutesPassed мин назад"
+                } else {
+                    "$minutesPassed мин назад"
+                },
+                station = station.toStationUi()
+            )
+        }
+
+    }
+
     data class NotToday(
         val id: Int,
         val dayTimeString: String,

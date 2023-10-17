@@ -8,7 +8,7 @@ import com.app.dubovozkiapp.consts.CoroutineTimeout.REFRESH_DELAY
 import com.app.dubovozkiapp.domain.bus_schedule.usecases.GetBusScheduleUseCase
 import com.app.dubovozkiapp.domain.bus_schedule.usecases.RefreshBusScheduleUseCase
 import com.app.dubovozkiapp.ktx.runCatchingNonCancellation
-import com.app.dubovozkiapp.ui.bus_schedule.factory.BusUiFactory.toUi
+import com.app.dubovozkiapp.ui.bus_schedule.factory.BusScheduleUiFactory.toUi
 import com.app.dubovozkiapp.ui.bus_schedule.model.BusScheduleUi
 import com.app.dubovozkiapp.ui.bus_schedule.screen_state.BusScheduleQueryState
 import com.app.dubovozkiapp.ui.bus_schedule.screen_state.BusScheduleScreenState

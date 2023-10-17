@@ -8,6 +8,7 @@ import androidx.compose.ui.unit.sp
 sealed interface StationUi {
     fun timeContent(time: String): @Composable () -> Unit
     fun nameContent(): @Composable () -> Unit
+    fun nameContentDeparted(): @Composable () -> Unit
 
     object Odintsovo : StationUi {
         override fun timeContent(time: String): @Composable () -> Unit = {
@@ -20,6 +21,14 @@ sealed interface StationUi {
         override fun nameContent(): @Composable () -> Unit = {
             Text(
                 text = "Одинцово",
+                fontSize = 16.sp
+            )
+        }
+
+        override fun nameContentDeparted(): @Composable () -> Unit = {
+            Text(
+                text = "Одинцово",
+                color = MaterialTheme.colorScheme.inverseOnSurface,
                 fontSize = 16.sp
             )
         }
@@ -44,13 +53,21 @@ sealed interface StationUi {
             )
         }
 
+        override fun nameContentDeparted(): @Composable () -> Unit = {
+            Text(
+                text = "Славянский б-р",
+                color = MaterialTheme.colorScheme.inverseOnSurface,
+                fontSize = 16.sp
+            )
+        }
+
     }
 
     object Molodyozhnaya : StationUi {
         override fun timeContent(time: String): @Composable () -> Unit = {
             Text(
                 text = time,
-                color = MaterialTheme.colorScheme.primary,
+                color = MaterialTheme.colorScheme.inversePrimary,
                 fontSize = 24.sp
             )
         }
@@ -58,7 +75,15 @@ sealed interface StationUi {
         override fun nameContent(): @Composable () -> Unit = {
             Text(
                 text = "Молодёжная",
-                color = MaterialTheme.colorScheme.primary,
+                color = MaterialTheme.colorScheme.inversePrimary,
+                fontSize = 16.sp
+            )
+        }
+
+        override fun nameContentDeparted(): @Composable () -> Unit = {
+            Text(
+                text = "Молодёжная",
+                color = MaterialTheme.colorScheme.inverseOnSurface,
                 fontSize = 16.sp
             )
         }
